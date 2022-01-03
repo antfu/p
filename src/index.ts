@@ -1,15 +1,3 @@
-export type PromiseArray<T> = Promise<T[]> & {
-  filter: (predicate: (value: T, index: number, array: T[]) => boolean) => PromiseArray<T>
-  map: <U>(callback: (value: T, index: number, array: T[]) => U, thisArg?: any) => PromiseArray<U>
-}
-
-export function makePromiseArray<T>(p: Promise<T[]>): PromiseArray<T> {
-  const pa = p as PromiseArray<T>
-  pa.filter = predicate => makePromiseArray(p.then(array => array.filter(predicate)))
-  pa.map = (callback, thisArg) => makePromiseArray(p.then(array => array.map(callback, thisArg)))
-  return pa
-}
-
 const NULL = Symbol('p-null')
 
 class FactoryP<T = any> extends Promise<Awaited<T>[]> {
