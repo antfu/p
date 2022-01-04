@@ -1,13 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import timeSpan from 'time-span'
 import { P } from '../src'
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
-// returns time of execution of the promise in ms
-const executionTime = (promise: Promise<any>) => {
-  const end = timeSpan()
-  return promise.then(res => [res, end()])
-}
 
 describe('should', () => {
   it('p', async() => {
@@ -37,20 +31,17 @@ describe('should', () => {
   })
 
   it('concurrency: 1', async() => {
-    const items = Array.from({ length: 10 }, async(_, i) => {
-      await timeout(i * 10)
+    let running = 0
+
+    const promises = Array.from({ length: 100 }, async(_, i: number) => {
+      running++
+      expect(running).to.be.lessThanOrEqual(1)
+      running--
       return i
     })
-    const [result, time] = await executionTime(
-      P(items, { concurrency: 1 })
-        .map(async(i) => {
-          await timeout(100)
-          return i
-        })
-        .reduce((a, b) => a + b, 0),
-    )
-    expect(result).toEqual(45)
-    expect(time).to.be.within(190, 210)
+
+    const results = await P(promises, { concurrency: 1 }).reduce((a, b) => a + b, 0)
+    expect(results).to.be.equal(4950)
   })
 
   it('concurrency: 4', async() => {
