@@ -15,8 +15,6 @@ importers:
       unbuild: ^0.6.7
       vite: ^2.7.10
       vitest: ^0.0.129
-    dependencies:
-      p-limit: 4.0.0
     devDependencies:
       '@antfu/eslint-config': 0.14.2_eslint@8.6.0+typescript@4.5.4
       '@antfu/ni': 0.12.0
@@ -24,6 +22,7 @@ importers:
       bumpp: 7.1.1
       eslint: 8.6.0
       esno: 0.13.0_typescript@4.5.4
+      p-limit: 4.0.0
       typescript: 4.5.4
       unbuild: 0.6.7
       vite: 2.7.10
@@ -2502,7 +2501,7 @@ packages:
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       yocto-queue: 1.0.0
-    dev: false
+    dev: true
 
   /p-locate/2.0.0:
     resolution: {integrity: sha1-IKAQOyIqcMj9OcwuWAaA893l7EM=}
@@ -3218,4 +3217,4 @@ packages:
   /yocto-queue/1.0.0:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
-    dev: false
+    dev: true

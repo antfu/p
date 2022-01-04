@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { P } from '../src'
+import P from '../src'
 
 const timeout = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 

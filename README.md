@@ -23,7 +23,7 @@ const items = [1, 2, 3, 4, 5]
 </details>
 
 ```ts
-import { P } from '@antfu/p'
+import P from '@antfu/p'
 
 const items = [1, 2, 3, 4, 5]
 
@@ -34,7 +34,7 @@ await P(items)
 ```
 
 ```ts
-import { P } from '@antfu/p'
+import P from '@antfu/p'
 
 const p = P()
 
@@ -44,9 +44,6 @@ p.add(promiseTask1)
 someOtherTasks()
 
 p.add(promiseTask2)
-
-someOtherTasks()
-
 p.add(promiseTask3)
 
 // resolve all collected promises
@@ -55,11 +52,12 @@ await p
 ```
 
 ```ts
-import { P } from '@antfu/p'
+import P from '@antfu/p'
 
-// will limit the number of concurrent tasks
+// limits the number of concurrent tasks
 await P(myTasks, { concurrency: 5 })
 ```
+
 ## Sponsors
 
 <p align="center">
