@@ -1,14 +1,33 @@
+import pLimit from 'p-limit'
+
 const NULL = Symbol('p-null')
+
+export interface POptions {
+  /**
+   * How many promises are resolved at the same time.
+   */
+  concurrency?: number | undefined
+}
 
 class FactoryP<T = any> extends Promise<Awaited<T>[]> {
   promises = new Set<T | Promise<T>>()
 
   get promise(): Promise<Awaited<T>[]> {
-    return Promise.all([...Array.from(this.items), ...Array.from(this.promises)])
-      .then(l => l.filter((i: any) => i !== NULL))
+    let solved
+    const items = [...Array.from(this.items), ...Array.from(this.promises)]
+
+    if (this.options?.concurrency) {
+      if (this.options.concurrency < 1 || !Number.isInteger(this.options.concurrency))
+        throw new TypeError('concurrency must be a positive integer greater than one')
+      const limit = pLimit(this.options.concurrency)
+      solved = Promise.all(items.map(p => limit(() => p)))
+    }
+    else { solved = Promise.all(items) }
+
+    return solved.then(l => l.filter((i: any) => i !== NULL))
   }
 
-  constructor(public items: Iterable<T> = []) {
+  constructor(public items: Iterable<T> = [], public options?: POptions) {
     super(() => {})
   }
 
@@ -24,7 +43,7 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
       if ((v as any) === NULL)
         return NULL as unknown as U
       return fn(v, idx)
-    }))
+    }), this.options)
   }
 
   filter(fn: (value: Awaited<T>, index: number) => boolean | Promise<boolean>): FactoryP<Promise<T>> {
@@ -35,8 +54,7 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
         if (!r)
           return NULL as unknown as T
         return v
-      }),
-    )
+      }), this.options)
   }
 
   forEach(fn: (value: Awaited<T>, index: number) => void): Promise<void> {
@@ -68,6 +86,6 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
   }
 }
 
-export function P<T = any>(items?: Iterable<T>): FactoryP<T> {
-  return new FactoryP(items)
+export function P<T = any>(items?: Iterable<T>, options?: POptions): FactoryP<T> {
+  return new FactoryP(items, options)
 }

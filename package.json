@@ -50,5 +50,8 @@
     "unbuild": "^0.6.7",
     "vite": "^2.7.10",
     "vitest": "^0.0.129"
+  },
+  "dependencies": {
+    "p-limit": "^4.0.0"
   }
 }

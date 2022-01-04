@@ -54,6 +54,12 @@ await p
 // => Promise.all([promiseTask1, promiseTask2, promiseTask3])
 ```
 
+```ts
+import { P } from '@antfu/p'
+
+// will limit the number of concurrent tasks
+await P(myTasks, { concurrency: 5 })
+```
 ## Sponsors
 
 <p align="center">
