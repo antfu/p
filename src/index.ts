@@ -1,15 +1,36 @@
+import pLimit from 'p-limit'
+
 const NULL = Symbol('p-null')
+
+export interface POptions {
+  /**
+   * How many promises are resolved at the same time.
+   */
+  concurrency?: number | undefined
+}
 
 class FactoryP<T = any> extends Promise<Awaited<T>[]> {
   promises = new Set<T | Promise<T>>()
+  private options: POptions | undefined
 
   get promise(): Promise<Awaited<T>[]> {
-    return Promise.all([...Array.from(this.items), ...Array.from(this.promises)])
-      .then(l => l.filter((i: any) => i !== NULL))
+    let solved
+    const items = [...Array.from(this.items), ...Array.from(this.promises)]
+
+    if (this.options?.concurrency) {
+      if (this.options.concurrency < 1 || !Number.isInteger(this.options.concurrency))
+        throw new TypeError('concurrency must be a positive integer greater than one')
+      const limit = pLimit(this.options.concurrency)
+      solved = Promise.all(items.map(p => limit(() => p)))
+    }
+    else { solved = Promise.all(items) }
+
+    return solved.then(l => l.filter((i: any) => i !== NULL))
   }
 
-  constructor(public items: Iterable<T> = []) {
+  constructor(public items: Iterable<T> = [], options?: POptions) {
     super(() => {})
+    this.options = options || {}
   }
 
   add(...args: (T | Promise<T>)[]) {
@@ -68,6 +89,6 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
   }
 }
 
-export function P<T = any>(items?: Iterable<T>): FactoryP<T> {
-  return new FactoryP(items)
+export function P<T = any>(items?: Iterable<T>, options?: POptions): FactoryP<T> {
+  return new FactoryP(items, options)
 }
