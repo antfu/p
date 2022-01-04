@@ -1,6 +1,6 @@
 {
   "name": "@antfu/p",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Toolkit for managing multiple promises",
   "keywords": [
     "promise"
