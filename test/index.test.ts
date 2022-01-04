@@ -1,4 +1,4 @@
-import { assert, describe, expect, it } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import timeSpan from 'time-span'
 import { P } from '../src'
 
