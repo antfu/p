@@ -11,7 +11,6 @@ export interface POptions {
 
 class FactoryP<T = any> extends Promise<Awaited<T>[]> {
   promises = new Set<T | Promise<T>>()
-  private options: POptions | undefined
 
   get promise(): Promise<Awaited<T>[]> {
     let solved
@@ -28,9 +27,8 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
     return solved.then(l => l.filter((i: any) => i !== NULL))
   }
 
-  constructor(public items: Iterable<T> = [], options?: POptions) {
+  constructor(public items: Iterable<T> = [], public options?: POptions) {
     super(() => {})
-    this.options = options || {}
   }
 
   add(...args: (T | Promise<T>)[]) {
@@ -45,7 +43,7 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
       if ((v as any) === NULL)
         return NULL as unknown as U
       return fn(v, idx)
-    }))
+    }), this.options)
   }
 
   filter(fn: (value: Awaited<T>, index: number) => boolean | Promise<boolean>): FactoryP<Promise<T>> {
@@ -56,8 +54,7 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
         if (!r)
           return NULL as unknown as T
         return v
-      }),
-    )
+      }), this.options)
   }
 
   forEach(fn: (value: Awaited<T>, index: number) => void): Promise<void> {
