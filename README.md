@@ -2,7 +2,7 @@
 
 [![NPM version](https://img.shields.io/npm/v/@antfu/p?color=a1b858&label=)](https://www.npmjs.com/package/@antfu/p)
 
-I don't really sure what it is yet. But it's basically some tools for handling promises.
+Toolkit for managing multiple promises.
 
 <details>
 <summary>Without</summary>

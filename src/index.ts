@@ -89,3 +89,5 @@ class FactoryP<T = any> extends Promise<Awaited<T>[]> {
 export function P<T = any>(items?: Iterable<T>, options?: POptions): FactoryP<T> {
   return new FactoryP(items, options)
 }
+
+export default P
