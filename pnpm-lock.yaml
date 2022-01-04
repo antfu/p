@@ -11,7 +11,6 @@ importers:
       eslint: ^8.6.0
       esno: ^0.13.0
       p-limit: ^4.0.0
-      time-span: ^5.0.0
       typescript: ^4.5.4
       unbuild: ^0.6.7
       vite: ^2.7.10
@@ -25,7 +24,6 @@ importers:
       bumpp: 7.1.1
       eslint: 8.6.0
       esno: 0.13.0_typescript@4.5.4
-      time-span: 5.0.0
       typescript: 4.5.4
       unbuild: 0.6.7
       vite: 2.7.10
@@ -844,11 +842,6 @@ packages:
 
   /consola/2.15.3:
     resolution: {integrity: sha512-9vAdYbHj6x2fLKC4+oPH0kFzY/orMZyG2Aj+kNylHxKGJ/Ed4dpNyAQYwJOdqO4zdM7XpVHmyejQDcQHrnuXbw==}
-    dev: true
-
-  /convert-hrtime/5.0.0:
-    resolution: {integrity: sha512-lOETlkIeYSJWcbbcvjRKGxVMXJR+8+OQb/mTPbA4ObPMytYIsUbuOE0Jzy60hjARYszq1id0j8KgVhC+WGZVTg==}
-    engines: {node: '>=12'}
     dev: true
 
   /convert-source-map/1.7.0:
@@ -2950,13 +2943,6 @@ packages:
 
   /text-table/0.2.0:
     resolution: {integrity: sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=}
-    dev: true
-
-  /time-span/5.0.0:
-    resolution: {integrity: sha512-6x1S1sA6AFbXCa2IUkZNJr6vJ6oVuK+m4YZXQs4Rf8256EQIQg6JSS/hSrs3k15GRDGV3vrWgmav5qHIytTyKQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      convert-hrtime: 5.0.0
     dev: true
 
   /tinypool/0.0.6:
