@@ -1,3 +1,7 @@
+# DEPRECATED, now it's part of [`@antfu/utils`](https://github.com/antfu/utils)
+
+-----
+
 # @antfu/p
 
 [![NPM version](https://img.shields.io/npm/v/@antfu/p?color=a1b858&label=)](https://www.npmjs.com/package/@antfu/p)
